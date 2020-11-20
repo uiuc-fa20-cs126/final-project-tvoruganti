@@ -24,7 +24,7 @@ Graph::Graph(const vec2& top_left_corner, const vec2& num_pixels_per_side,
 
 }
 
-void Graph::Draw() const {
+void Graph::Draw() const{
   for (size_t row = 0; row < num_pixels_per_side_.y; ++row) {
     for (size_t col = 0; col < num_pixels_per_side_.x; ++col) {
 
@@ -34,6 +34,8 @@ void Graph::Draw() const {
         ci::gl::color(ci::Color("lime"));
       }else if (image_[row][col] == 'e') {
         ci::gl::color(ci::Color("red"));
+      }else if (image_[row][col] == 'b') {
+        ci::gl::color(ci::Color("blue"));
       }else {
         ci::gl::color(ci::Color("white"));
       }
@@ -47,10 +49,12 @@ void Graph::Draw() const {
 
       ci::gl::drawSolidRect(pixel_bounding_box);
 
-      ci::gl::color(ci::Color("black"));
+      ci::gl::color(ci::Color::gray(0.7f));
       ci::gl::drawStrokedRect(pixel_bounding_box);
     }
   }
+  if (draw_path)
+    DrawPath();
 }
 
 void Graph::HandleBrush(const vec2& brush_screen_coords, bool draw_point, bool start_point) {
@@ -61,11 +65,11 @@ void Graph::HandleBrush(const vec2& brush_screen_coords, bool draw_point, bool s
     if (start_point){
       image_[start_point_coords_.y][start_point_coords_.x] = ' ';
       image_[brush_sketchpad_coords.y][brush_sketchpad_coords.x] = 's';
-      start_point_coords_ = brush_sketchpad_coords;
+      start_point_coords_ = vec2((size_t)brush_sketchpad_coords.x, (size_t)brush_sketchpad_coords.y);
     } else {
       image_[end_point_coords_.y][end_point_coords_.x] = ' ';
       image_[brush_sketchpad_coords.y][brush_sketchpad_coords.x] = 'e';
-      end_point_coords_ = brush_sketchpad_coords;
+      end_point_coords_ = vec2((size_t)brush_sketchpad_coords.x, (size_t)brush_sketchpad_coords.y);
     }
   } else {
     for (size_t row = 0; row < num_pixels_per_side_.y; ++row) {
@@ -80,7 +84,6 @@ void Graph::HandleBrush(const vec2& brush_screen_coords, bool draw_point, bool s
       }
     }
   }
-
 }
 
 void Graph::Clear() {
@@ -93,9 +96,22 @@ void Graph::Clear() {
   end_point_coords_ = num_pixels_per_side_ - vec2(1,1);
   image_[start_point_coords_.y][start_point_coords_.x] = 's';
   image_[end_point_coords_.y][end_point_coords_.x] = 'e';
+  draw_path = false;
 }
+
 std::vector<std::vector<char>> Graph::GetImage(){
   return image_;
+}
+
+void Graph::DrawPath() const{
+  vec2 start_line = top_left_corner_ + (start_point_coords_ + .5f) * vec2(pixel_side_length_);
+  vec2 end_line = top_left_corner_ + (end_point_coords_ + .5f) * vec2(pixel_side_length_);
+
+  ci::gl::color(ci::Color("green"));
+  ci::gl::drawLine(start_line, end_line);
+}
+void Graph::ShowPath() {
+  draw_path = !draw_path;
 }
 
 }  // namespace visualizer

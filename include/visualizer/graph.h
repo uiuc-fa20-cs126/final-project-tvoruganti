@@ -28,12 +28,16 @@ class Graph {
 
   std::vector<std::vector<char>> GetImage();
 
+  void DrawPath() const;
+  void ShowPath();
+
  private:
   vec2 top_left_corner_;
   vec2 num_pixels_per_side_;
   vec2 start_point_coords_;
   vec2 end_point_coords_;
   double brush_radius_;
+  bool draw_path = false;
   size_t pixel_side_length_; //Number of screen pixels in the width/height of one sketchpad pixel
   std::vector<std::vector<char>> image_;
 };

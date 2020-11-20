@@ -28,8 +28,10 @@ class PathFindingApp : public ci::app::App {
   const size_t kWindowSize = 800;
   const size_t kMargin = 100;
   const vec2 kImageDimension = vec2(30,20);
-  //bool is_start = true;
+  bool is_start = false;
   Graph sketchpad_;
+
+  void drawButtons() const;
 };
 
 }  // namespace visualizer

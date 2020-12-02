@@ -17,19 +17,41 @@ namespace visualizer {
  */
 class PathFindingApp : public ci::app::App {
  public:
+
+  /**
+   * creates app
+   */
   PathFindingApp();
 
+  /**
+   * draws everything on the app
+   */
   void draw() override;
+
+  /**
+   * called when mouse press id detected
+   * @param event information about the press
+   */
   void mouseDown(ci::app::MouseEvent event) override;
+
+  /**
+   * called when mouse is dragged
+   * @param event information about the drag
+   */
   void mouseDrag(ci::app::MouseEvent event) override;
+
+  /**
+   * called when a key is pressed and does an action if the right key is pressed
+   * @param event information about the key press
+   */
   void keyDown(ci::app::KeyEvent event) override;
 
- private:
+private:
   const size_t kWindowSize = 800;
-  const size_t kMargin = 100;
-  const vec2 kImageDimension = vec2(30,20);
-  bool is_start = false;
-  Graph sketchpad_;
+  const size_t kMargin = 100; //how far from (0,0) graph should start
+  const vec2 kImageDimension = vec2(20,30); //size of sketchpad in sketchpad coordinates
+  bool is_start = true; //whether start or end button is selected
+  Graph graph_; //graph that you can draw on
 
   void drawButtons() const;
 };

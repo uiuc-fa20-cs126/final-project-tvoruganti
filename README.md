@@ -8,7 +8,7 @@
 5. Run the app in cinder_app_main.cc
 
 <h3>What does this app do?</h3>	
-![alt text](pathfinder.png "Image")
+![](pathfinder.png)
 
 <h5>Summary</h5>	
 

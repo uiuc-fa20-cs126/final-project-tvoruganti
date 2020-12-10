@@ -91,7 +91,7 @@ void AStarAlgorithm::SolveAStar() {
         node_neighbor->parent = current;
         node_neighbor->local_dist = possible_lower_goal;
 
-        //update the neighbour's global distance
+        //update the neighbor's global distance
         node_neighbor->global_dist = node_neighbor->local_dist + glm::distance(vec2(end_node_->x, end_node_->y), vec2(node_neighbor->x, node_neighbor->y));
 
       }

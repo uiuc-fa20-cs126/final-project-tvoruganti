@@ -56,6 +56,8 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
         src/visualizer/path_finding_app.cc
         src/visualizer/graph.cc)
 
+list(APPEND TEST_FILES tests/test_AStar.cc)
+
 ci_make_app(
         APP_NAME        path-finder
         CINDER_PATH     ${CINDER_PATH}

@@ -8,7 +8,8 @@
 5. Run the app in cinder_app_main.cc
 
 <h3>What does this app do?</h3>	
-![](https://github.com/uiuc-fa20-cs126/final-project-tvoruganti/blob/fpweek3/Images/pathfinder.png)
+
+![](Images/pathfinder.png)
 
 <h5>Summary</h5>	
 

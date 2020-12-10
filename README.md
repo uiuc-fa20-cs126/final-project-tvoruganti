@@ -8,7 +8,7 @@
 5. Run the app in cinder_app_main.cc
 
 <h3>What does this app do?</h3>	
-![](Images/pathfinder.png)
+![](Images/pathfinder.png?raw=true)
 
 <h5>Summary</h5>	
 

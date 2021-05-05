@@ -5,17 +5,18 @@ namespace path_finding {
 namespace visualizer {
 
 PathFindingApp::PathFindingApp()
-    : sketchpad_(glm::vec2(kMargin, kMargin), kImageDimension,
+    : graph_(glm::vec2(kMargin, kMargin), kImageDimension,
                  vec2(kWindowSize - kMargin, kWindowSize - 2 * kMargin)) {
   app::setWindowSize(kWindowSize + 6 * kMargin, (int)kWindowSize);
 }
 
 void PathFindingApp::draw() {
-  Color8u background_color(0, 0, 0);  // light yellow
+  Color8u background_color(0, 0, 0);
   gl::clear(background_color);
 
-  sketchpad_.Draw();
+  graph_.DrawHelper();
 
+  //draws text on screen
   gl::drawStringCentered(
       "Path Finding Simulator",
       glm::vec2((kWindowSize + 6 * kMargin) / 2, kMargin / 2), Color("white"));
@@ -30,11 +31,12 @@ void PathFindingApp::draw() {
 
 void PathFindingApp::mouseDown(app::MouseEvent event) {
   if (event.isLeftDown())
-    sketchpad_.HandleBrush(event.getPos(), false, false);
+    graph_.HandleBrush(event.getPos(), false, false);
   else
-    sketchpad_.HandleBrush(event.getPos(), true, is_start);
+    graph_.HandleBrush(event.getPos(), true, is_start);
 
   vec2 pos = event.getPos();
+  //switches is_start if mouse click is in the right place
   if (pos.x >= kWindowSize + 7.0f*kMargin/2 && pos.x <= kWindowSize + 9.0f*kMargin/2 &&
       pos.y >= kMargin + 30.0f && pos.y <= 3.0f*kMargin/2 + 30){
       is_start = true;
@@ -42,28 +44,41 @@ void PathFindingApp::mouseDown(app::MouseEvent event) {
              pos.y >= 3.0f*kMargin/2 + 60 && pos.y <= 2.0f*kMargin + 60){
       is_start = false;
   }
-
 }
 
 void PathFindingApp::mouseDrag(app::MouseEvent event) {
   if (event.isLeftDown())
-    sketchpad_.HandleBrush(event.getPos(), false, false);
+    graph_.HandleBrush(event.getPos(), false, false);
   else
-    sketchpad_.HandleBrush(event.getPos(), true, is_start);
-
-
+    graph_.HandleBrush(event.getPos(), true, is_start);
 }
 
 void PathFindingApp::keyDown(app::KeyEvent event) {
+  std::ifstream is;
+  std::ofstream os;
+
   switch (event.getCode()) {
     case app::KeyEvent::KEY_RSHIFT:
-      sketchpad_.Clear();
+      graph_.Clear();
       break;
     case app::KeyEvent::KEY_RETURN:
-      sketchpad_.ShowPath();
+      graph_.ToggleShowPath();
+      break;
+    case app::KeyEvent::KEY_l:
+      //loads a graph from a file
+      if (!is.eof()) {
+        is = std::ifstream("/Users/tarunvoruganti/Desktop/Cinder/my-projects/final-project-tvoruganti/resources/graph.txt");
+        is >> graph_;
+      }
+      break;
+    case app::KeyEvent::KEY_s:
+      //saves a graph to a file
+      os = std::ofstream("/Users/tarunvoruganti/Desktop/Cinder/my-projects/final-project-tvoruganti/resources/graph.txt");
+      os << graph_;
       break;
   }
 }
+
 void PathFindingApp::drawButtons() const {
 
   gl::drawStringCentered(

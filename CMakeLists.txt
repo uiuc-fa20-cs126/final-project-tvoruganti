@@ -47,6 +47,9 @@ endif()
 get_filename_component(CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../" ABSOLUTE)
 get_filename_component(APP_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" ABSOLUTE)
 
+list(APPEND CORE_SOURCE_FILES src/core/AStarAlgorithm.cc)
+
+
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}

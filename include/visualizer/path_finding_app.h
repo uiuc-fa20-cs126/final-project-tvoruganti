@@ -40,17 +40,13 @@ class PathFindingApp : public ci::app::App {
    */
   void mouseDrag(ci::app::MouseEvent event) override;
 
-  /**
-   * called when a key is pressed and does an action if the right key is pressed
-   * @param event information about the key press
-   */
-  void keyDown(ci::app::KeyEvent event) override;
-
 private:
   const size_t kWindowSize = 800;
   const size_t kMargin = 100; //how far from (0,0) graph should start
   const vec2 kImageDimension = vec2(20,30); //size of sketchpad in sketchpad coordinates
   bool is_start = true; //whether start or end button is selected
+  bool show_path = false; //whether to show path or not
+
   Graph graph_; //graph that you can draw on
 
   void drawButtons() const;
